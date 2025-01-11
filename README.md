@@ -42,3 +42,13 @@ Run the application
 ```bash
 python .\onboard\weapon-detect\main.py
 ```
+
+Install dependencies
+```bash
+pip install -r requirements.txt
+```   
+
+OR (Reccomended)
+```bash
+pip install opencv-python interference roboflow
+```
