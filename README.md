@@ -33,3 +33,12 @@ Install the required dependencies
 ```
 pip install -r requirements.txt
 ```
+
+Create a ROBOFLOW_API_KEY file
+
+Add API KEY from RoboFlow to the ROBOFLOW_API_KEY file
+
+Run the application
+```bash
+python .\onboard\weapon-detect\main.py
+```

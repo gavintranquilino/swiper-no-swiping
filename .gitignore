@@ -1,2 +1,5 @@
 # Python gitignore and virtualenv
 .venv
+
+# API KEY
+ROBOFLOW_API_KEY
