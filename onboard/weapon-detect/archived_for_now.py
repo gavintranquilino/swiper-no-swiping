@@ -1,5 +1,5 @@
 import roboflow
-import cv2 
+import cv2
 
 with open("ROBOFLOW_API_KEY", "r") as file:
     key = file.readline().strip()
@@ -11,7 +11,8 @@ project = rf.workspace().project("knife-detection-hgvy2")
 model = project.version(1).model
 
 # Open the webcam (0 is usually the default camera)
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
+
 
 # Check if the webcam is opened successfully
 if not cap.isOpened():

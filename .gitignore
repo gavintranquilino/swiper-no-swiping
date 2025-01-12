@@ -2,4 +2,4 @@
 .venv
 
 # API KEY
-ROBOFLOW_API_KEY
+onboard/weapon-detect/ROBOFLOW_API_KEY
