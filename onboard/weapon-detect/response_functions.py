@@ -48,7 +48,7 @@ def on_prediction_with_pushover(predictions, frame):
             return
 
         for prediction in predictions.get("predictions", []):
-            if prediction.get("class") == "Knife" and prediction.get("confidence") > 0.7:
+            if prediction.get("class") == "Knife" and prediction.get("confidence") > 0.6:
                 # Send Pushover notification
                 send_pushover_notification(
                     user_key=USER_KEY,
