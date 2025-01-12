@@ -7,6 +7,7 @@ arduino = serial.Serial(port='COM5', baudrate=9600, timeout=1)  # Replace 'COM3'
 time.sleep(2)  # Wait for the connection to initialize
 pygame.mixer.init()
 pygame.mixer.music.load("Swiper no swiping.mp3")
+pygame.mixer.music.play()
 
 swiped = False
 
@@ -19,10 +20,13 @@ try:
             if line == "1":
                 swiped = True
 
+        if swiped and pygame.mixer.music.get_busy():
+            swiped = False
+
         if swiped == True:
             print('Swiper no Swiping!')
             pygame.mixer.music.play()
-        swiped = False
+            swiped = False
 
         # time.sleep(1  # Wait for 1 second
 except KeyboardInterrupt:
