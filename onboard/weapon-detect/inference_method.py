@@ -9,7 +9,8 @@ import json
 
 # Load the Roboflow API key from the package.json file
 with open("package.json", "r") as f:
-    key = json.load(f)["ROBOFLOW_API_KEY"]
+    key = json.load(f)["robo_api"]
+
 
 # initialize a pipeline object
 pipeline = InferencePipeline.init(

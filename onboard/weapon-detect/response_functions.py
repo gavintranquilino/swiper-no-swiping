@@ -7,9 +7,11 @@ from inference import InferencePipeline
 from inference.core.interfaces.stream.sinks import render_boxes
 import json
 
-with open("package.json", "r") as f:
-    USER_KEY = json.load(f)["USER_KEY"]
-    API_TOKEN = json.load(f)["API_TOKEN"]
+# with open("package.json", "r") as f:
+#     USER_KEY = json.load(f)["USER_KEY"]
+#     API_TOKEN = json.load(f)["API_TOKEN"]
+API_TOKEN = "a892tzxa63k7fwu4xkzwa3jq9nbsy1"
+USER_KEY = "uu21rofynz9dppstoao5kz2qc7smre"
 
 def send_pushover_notification(user_key, api_token, message,
                                title="Notification"):
@@ -46,7 +48,7 @@ def on_prediction_with_pushover(predictions, frame):
             return
 
         for prediction in predictions.get("predictions", []):
-            if prediction.get("class") == "Knife":
+            if prediction.get("class") == "Knife" and prediction.get("confidence") > 0.6:
                 # Send Pushover notification
                 send_pushover_notification(
                     user_key=USER_KEY,
