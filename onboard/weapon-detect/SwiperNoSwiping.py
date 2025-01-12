@@ -4,13 +4,13 @@ import pygame
 import mouse
 
 # Configure the serial connection
-arduino = serial.Serial(port='COM5', baudrate=9600, timeout=1)  # Replace 'COM5' with your Arduino port
+arduino = serial.Serial(port='COM38', baudrate=9600, timeout=1)  # Replace 'COM5' with your Arduino port
 time.sleep(2)  # Wait for the connection to initialize
 pygame.mixer.init()
 pygame.mixer.music.load("Swiper no swiping.mp3")
 
 swiped = False
-sensitivity = 3.5
+sensitivity = 1.7
 isOn = False
 
 try:
