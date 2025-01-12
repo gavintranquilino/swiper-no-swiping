@@ -1,35 +1,55 @@
 import serial
 import time
 import pygame
+import mouse
 
 # Configure the serial connection
-arduino = serial.Serial(port='COM5', baudrate=9600, timeout=1)  # Replace 'COM3' with your Arduino port
+arduino = serial.Serial(port='COM5', baudrate=9600, timeout=1)  # Replace 'COM5' with your Arduino port
 time.sleep(2)  # Wait for the connection to initialize
 pygame.mixer.init()
 pygame.mixer.music.load("Swiper no swiping.mp3")
-pygame.mixer.music.play()
 
 swiped = False
+sensitivity = 3.5
+isOn = False
 
 try:
+    print("Program started. Left-click to activate, right-click to deactivate.")
     while True:
-        # Read data from Arduino
-        if arduino.in_waiting > 0:
-            line = arduino.readline().decode('utf-8').strip()
-            print(line)
-            if line == "1":
-                swiped = True
+        # Waiting for left click to activate
+        while not isOn:
+            if mouse.is_pressed('left'):
+                print("Left mouse button clicked! Activating...")
+                isOn = True
+                time.sleep(0.5)  # Debounce delay to prevent accidental double-clicks
 
-        if swiped and pygame.mixer.music.get_busy():
-            swiped = False
+        # Active mode: Processing Arduino data
+        while isOn:
+            if arduino.in_waiting > 0:
+                try:
+                    # Read and process data from Arduino
+                    line = arduino.readline().decode('utf-8').strip()
+                    line_value = float(line)
+                    print(f"Arduino Value: {line_value}")
+                    if line_value > sensitivity:
+                        swiped = True
+                except ValueError:
+                    print(f"Invalid data received from Arduino: {line}")
 
-        if swiped == True:
-            print('Swiper no Swiping!')
-            pygame.mixer.music.play()
-            swiped = False
+            # Play sound if a swipe is detected
+            if swiped and not pygame.mixer.music.get_busy():
+                print('Swiper no Swiping!')
+                pygame.mixer.music.play()
+                swiped = False
 
-        # time.sleep(1  # Wait for 1 second
+            # Check for right click to deactivate
+            if mouse.is_pressed('right'):
+                print("Right mouse button clicked! Deactivating...")
+                isOn = False
+                time.sleep(0.5)  # Debounce delay
+
 except KeyboardInterrupt:
-    print("Communication stopped.")
+    print("Program terminated by user.")
 finally:
+    print("Cleaning up resources...")
     arduino.close()
